@@ -23,12 +23,8 @@ export default function Navbar() {
   return (
     <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
-        <Link to="/" className="navbar__logo navbar__logo--text" onClick={close}>
-          <span className="navbar__logo-mark">KA</span>
-          <span className="navbar__logo-word">
-            <strong>Kozak</strong> Adjusting
-            <small>NJ Licensed Public Adjusters</small>
-          </span>
+        <Link to="/" className="navbar__logo" onClick={close}>
+          <img src="/Kozak_Logo.png" alt="Kozak Adjusting — NJ Licensed Public Adjusters" className="navbar__logo-img" />
         </Link>
 
         <ul className={`navbar__links${isOpen ? ' navbar__links--open' : ''}`}>

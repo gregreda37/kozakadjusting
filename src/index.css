@@ -135,11 +135,10 @@ ul { list-style: none; }
   display: flex; align-items: center;
 }
 .navbar__logo-img {
-  height: 48px;
+  height: 46px;
   width: auto;
   display: block;
   object-fit: contain;
-  mix-blend-mode: multiply;
 }
 .navbar__links { display: flex; align-items: center; gap: 4px; }
 .navbar__links a {
@@ -755,26 +754,9 @@ code { background: var(--clr-bg-alt); border: 1px solid var(--clr-border); paddi
    Kozak Adjusting — page-specific additions
    ============================================================ */
 
-/* ── Text wordmark logo ── */
-.navbar__logo--text { gap: 12px; }
-.navbar__logo-mark {
-  width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-heading));
-  color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 1.05rem;
-}
-.navbar__logo-word {
-  font-family: var(--font-serif); font-size: 1.2rem; color: var(--clr-heading); line-height: 1.1;
-}
-.navbar__logo-word strong { color: var(--clr-primary); }
-.navbar__logo-word small {
-  display: block; font-family: var(--font-sans); font-size: .6875rem; font-weight: 600;
-  color: var(--clr-text-lt); letter-spacing: .04em; margin-top: 2px;
-}
+/* ── Logo image sizing on smaller screens ── */
 @media (max-width: 480px) {
-  .navbar__logo-mark { width: 34px; height: 34px; font-size: .9rem; }
-  .navbar__logo-word { font-size: 1rem; }
-  .navbar__logo-word small { display: none; }
+  .navbar__logo-img { height: 36px; }
 }
 
 /* ── Centered hero (no image) ── */
