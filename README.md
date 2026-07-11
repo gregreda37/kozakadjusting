@@ -33,9 +33,8 @@ npm run preview    # serves the built dist/ locally to verify
    npm install -g firebase-tools
    firebase login
    ```
-2. Create a Firebase project (or use an existing one), then set its ID in
-   [`.firebaserc`](.firebaserc) — replace `kozakadjusting` with your actual
-   project ID.
+2. The Firebase project is **`kozakadjusting-e76a3`**, already set as the default in
+   [`.firebaserc`](.firebaserc).
 3. Build and deploy:
    ```bash
    npm run deploy      # runs "npm run build && firebase deploy"
@@ -56,9 +55,8 @@ repo's **Actions** tab:
 
 ### One-time setup (required before the pipelines work)
 
-1. **Confirm the Firebase project ID.** Both workflows use `projectId: kozakadjusting`.
-   Firebase often appends a suffix (e.g. `kozakadjusting-1a2b3`). If yours differs, update
-   `projectId:` in both workflow files **and** the `default` in [`.firebaserc`](.firebaserc).
+1. **Firebase project ID** is `kozakadjusting-e76a3` — already set in both workflow files
+   (`projectId:`) and in [`.firebaserc`](.firebaserc).
 
 2. **Add the service-account secret.** The workflows authenticate with a
    `FIREBASE_SERVICE_ACCOUNT` GitHub secret. The easiest way to generate it is:
