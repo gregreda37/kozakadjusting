@@ -45,6 +45,12 @@ const ClockIcon = () => (
   </svg>
 )
 
+const ShieldCheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+  </svg>
+)
+
 const REASONS = [
   { n: '1', title: 'Works for you, not the insurer', desc: 'Our only goal is your fair, maximum settlement — never the insurance company’s bottom line.' },
   { n: '2', title: 'Understands policy details & regulations', desc: 'We know the fine print and the New Jersey rules that protect you.' },
@@ -226,6 +232,83 @@ export default function Home() {
                 <p>{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Restoration partner (Ukrainian Restoration) ── */}
+      <section className="section" aria-labelledby="partner-heading">
+        <div className="container">
+          <div className="home-split">
+            <div className="home-split__text">
+              <div className="sec-label sec-label--left">Restoration &amp; Reconstruction</div>
+              <h2 id="partner-heading">Need the Damage Repaired, Too?</h2>
+              <p>
+                Winning the claim is only half the battle — your home or business still needs to be
+                put back together. That&apos;s where our sister company comes in.
+              </p>
+              <p>
+                We work hand-in-hand with{' '}
+                <a
+                  href="https://www.ukrainianrestoration.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link"
+                >
+                  Ukrainian Restoration
+                </a>
+                , a licensed New Jersey general contractor and restoration company. We handle the
+                insurance side; they handle the cleanup and rebuild. Together, you get the best
+                possible outcome: a maximum settlement <em>and</em> a finished home.
+              </p>
+              <div className="split-features" style={{ marginTop: 20 }}>
+                <div className="split-feature">
+                  <div className="split-feature__icon"><ShieldCheckIcon /></div>
+                  <div>
+                    <strong>One coordinated team</strong>
+                    <p>Claim and construction stay aligned — no gaps, no finger-pointing between companies.</p>
+                  </div>
+                </div>
+                <div className="split-feature">
+                  <div className="split-feature__icon"><ShieldCheckIcon /></div>
+                  <div>
+                    <strong>Licensed &amp; insured contractor</strong>
+                    <p>Full-service water, fire, and storm restoration through to complete reconstruction.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="section-actions" style={{ gap: 12, flexWrap: 'wrap' }}>
+                <a
+                  href="https://www.ukrainianrestoration.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  Visit Ukrainian Restoration ↗
+                </a>
+                <Link to="/contact" className="btn btn-outline">Free Consultation</Link>
+              </div>
+            </div>
+            <div className="home-split__img partner-card-wrap">
+              <div className="pa-card">
+                <div className="pa-card__label">Restoration Partner</div>
+                <div className="pa-card__name">Ukrainian Restoration</div>
+                <p className="pa-card__desc">
+                  Licensed New Jersey general contractor specializing in water, fire, and storm
+                  damage restoration and full reconstruction — rebuilding your property back to
+                  better than before.
+                </p>
+                <a
+                  href="https://www.ukrainianrestoration.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-warm"
+                  style={{ width: '100%', textAlign: 'center', marginTop: 'auto' }}
+                >
+                  ukrainianrestoration.com ↗
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

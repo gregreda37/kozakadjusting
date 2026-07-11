@@ -95,6 +95,55 @@ export default function Reconstruction() {
         </div>
       </section>
 
+      {/* Restoration partner (Ukrainian Restoration) */}
+      <section className="section" aria-labelledby="recon-partner">
+        <div className="container">
+          <div className="home-split">
+            <div className="home-split__text">
+              <div className="sec-label sec-label--left">Our Build Team</div>
+              <h2 id="recon-partner">Reconstruction by Ukrainian Restoration</h2>
+              <p>
+                Our reconstruction work is delivered through our sister company,{' '}
+                <a
+                  href="https://www.ukrainianrestoration.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link"
+                >
+                  Ukrainian Restoration
+                </a>
+                — a licensed New Jersey general contractor and restoration company. Because the same
+                family of companies handles both your claim and your rebuild, there&apos;s no handoff,
+                no gaps, and no finger-pointing between an adjuster and a separate contractor.
+              </p>
+              <p>
+                From water and fire mitigation to a fully finished home, one accountable team sees the
+                job through from your first call to the final walkthrough.
+              </p>
+            </div>
+            <div className="home-split__img partner-card-wrap">
+              <div className="pa-card">
+                <div className="pa-card__label">Restoration Partner</div>
+                <div className="pa-card__name">Ukrainian Restoration</div>
+                <p className="pa-card__desc">
+                  Licensed NJ general contractor specializing in water, fire, and storm restoration
+                  and complete reconstruction — rebuilding your property back to better than before.
+                </p>
+                <a
+                  href="https://www.ukrainianrestoration.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-warm"
+                  style={{ width: '100%', textAlign: 'center', marginTop: 'auto' }}
+                >
+                  Visit Ukrainian Restoration ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="cta-banner">
         <h2>Ready to Rebuild?</h2>

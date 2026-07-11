@@ -55,6 +55,12 @@ export default function Footer() {
               <li><Link to="/reconstruction">Reconstruction</Link></li>
               <li><Link to="/">How Our Fees Work</Link></li>
             </ul>
+            <div className="footer__partner">
+              <div className="footer__partner-label">Restoration Partner</div>
+              <a href="https://www.ukrainianrestoration.com" target="_blank" rel="noopener noreferrer">
+                Ukrainian Restoration ↗
+              </a>
+            </div>
           </div>
 
           <div className="footer__col">

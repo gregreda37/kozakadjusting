@@ -801,6 +801,48 @@ code { background: var(--clr-bg-alt); border: 1px solid var(--clr-border); paddi
 @media (max-width: 1000px) { .process-grid--5 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .process-grid--5 { grid-template-columns: 1fr; } }
 
+/* ── Restoration partner card (cross-link to Ukrainian Restoration) ── */
+.partner-card-wrap {
+  display: flex !important;
+  align-items: stretch !important;
+  min-height: 320px;
+}
+.pa-card {
+  background: var(--clr-white);
+  border: 2px solid var(--clr-primary);
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+.pa-card__label {
+  font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--clr-primary);
+}
+.pa-card__name { font-family: var(--font-serif); font-size: 1.75rem; color: var(--clr-heading); line-height: 1.2; }
+.pa-card__desc { color: var(--clr-text-lt); font-size: .9375rem; line-height: 1.7; flex: 1; }
+
+/* Inline text link */
+.text-link { color: var(--clr-primary); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+.text-link:hover { color: var(--clr-primary-dk); }
+
+/* Footer partner link */
+.footer__partner { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); }
+.footer__partner-label {
+  font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--clr-accent); margin-bottom: 6px;
+}
+.footer__partner a { color: rgba(255,255,255,.85); font-weight: 600; font-size: .9375rem; }
+.footer__partner a:hover { color: #fff; }
+
+@media (max-width: 860px) {
+  .partner-card-wrap { min-height: unset; }
+  .pa-card { padding: 28px 24px; }
+}
+
 /* ── Centered hero (no image) ── */
 .hero__text--center { text-align: center; max-width: 780px; margin: 0 auto; }
 .hero__text--center .hero__actions,
