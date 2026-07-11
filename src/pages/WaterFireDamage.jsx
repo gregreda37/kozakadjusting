@@ -1,4 +1,14 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
+
+const SERVICE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Water and Fire Damage Insurance Claims & Remediation',
+  provider: { '@type': 'InsuranceAgency', name: 'Kozak Adjusting LLC', telephone: '+1-973-219-4973' },
+  areaServed: { '@type': 'State', name: 'New Jersey' },
+  description: 'Water and fire damage insurance claim adjusting and in-house remediation for New Jersey homeowners and businesses.',
+}
 
 const PROCESS = [
   { step: '01', title: 'Emergency Response', desc: 'Call us any time — we respond fast to assess the damage, document everything, and start protecting your property immediately.' },
@@ -9,6 +19,13 @@ const PROCESS = [
 export default function WaterFireDamage() {
   return (
     <>
+      <Seo
+        title="Water & Fire Damage Claims in New Jersey | Kozak Adjusting"
+        description="Water and fire damage insurance claims handled by NJ licensed public adjusters. We mitigate the damage and maximize your payout — available 24/7. Call (973) 219-4973."
+        path="/water-fire-damage"
+        schema={SERVICE_SCHEMA}
+      />
+
       <div className="page-banner">
         <div className="container">
           <h1>Water &amp; Fire Damage</h1>

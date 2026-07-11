@@ -21,7 +21,8 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <div className="footer__logo">
-              <strong>Kozak</strong> Adjusting LLC
+              <img src="/kozak-icon-white.png" alt="" className="footer__logo-icon" />
+              <span><strong>Kozak</strong> Adjusting LLC</span>
             </div>
             <p>
               New Jersey licensed public adjusters. We help homeowners and businesses
@@ -39,6 +40,7 @@ export default function Footer() {
             <h4>Pages</h4>
             <ul>
               <li><Link to="/">Home</Link></li>
+              <li><Link to="/public-adjusters">Public Adjusters</Link></li>
               <li><Link to="/water-fire-damage">Water &amp; Fire Damage</Link></li>
               <li><Link to="/reconstruction">Reconstruction</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>

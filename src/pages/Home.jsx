@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
 
 const PhoneIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -64,6 +65,12 @@ const ADVANTAGES = [
 export default function Home() {
   return (
     <>
+      <Seo
+        title="Kozak Adjusting | New Jersey Licensed Public Adjusters"
+        description="New Jersey licensed public adjusters. We represent you — not the insurance company — to secure fair payouts for water, fire, storm & flood claims. Free consultation, no upfront cost, 24/7. Call (973) 219-4973."
+        path="/"
+      />
+
       {/* ── Hero ── */}
       <section className="hero">
         <div className="container">
@@ -115,6 +122,7 @@ export default function Home() {
               </p>
               <div className="section-actions">
                 <Link to="/contact" className="btn btn-primary">Talk to an Adjuster</Link>
+                <Link to="/public-adjusters" className="btn btn-outline">Learn More</Link>
               </div>
             </div>
             <div className="home-split__img card info-card who-card">

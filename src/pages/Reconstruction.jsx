@@ -1,4 +1,14 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
+
+const SERVICE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Property Reconstruction After Insurance Loss',
+  provider: { '@type': 'InsuranceAgency', name: 'Kozak Adjusting LLC', telephone: '+1-973-219-4973' },
+  areaServed: { '@type': 'State', name: 'New Jersey' },
+  description: 'In-house reconstruction of homes and businesses after water, fire, and storm damage — from claim to completion.',
+}
 
 const SERVICES = [
   { title: 'Structural Repairs', desc: 'Framing, drywall, and structural work to bring your property back to a safe, sound condition.' },
@@ -10,6 +20,13 @@ const SERVICES = [
 export default function Reconstruction() {
   return (
     <>
+      <Seo
+        title="Reconstruction & Repairs After Damage in NJ | Kozak Adjusting"
+        description="From claim to completion — Kozak Adjusting rebuilds New Jersey homes and businesses after water, fire, and storm damage. One accountable team, no subcontractor maze. Call (973) 219-4973."
+        path="/reconstruction"
+        schema={SERVICE_SCHEMA}
+      />
+
       <div className="page-banner">
         <div className="container">
           <h1>Reconstruction</h1>

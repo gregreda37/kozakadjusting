@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
+import PublicAdjusters from './pages/PublicAdjusters'
 import WaterFireDamage from './pages/WaterFireDamage'
 import Reconstruction from './pages/Reconstruction'
 import Contact from './pages/Contact'
@@ -57,6 +58,7 @@ export default function App() {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/public-adjusters" element={<PublicAdjusters />} />
             <Route path="/water-fire-damage" element={<WaterFireDamage />} />
             <Route path="/reconstruction" element={<Reconstruction />} />
             <Route path="/contact" element={<Contact />} />
