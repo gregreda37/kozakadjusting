@@ -44,6 +44,42 @@ npm run preview    # serves the built dist/ locally to verify
 The `firebase.json` config serves `dist/` and rewrites all routes to `index.html`
 so client-side routing works on refresh/deep links.
 
+## Continuous deployment (GitHub Actions)
+
+Two pipelines live in [`.github/workflows/`](.github/workflows/) and show up in the
+repo's **Actions** tab:
+
+- **`deploy.yml`** — on every push to `main`: `npm ci` → `npm run build` → deploy to the
+  **live** Firebase Hosting channel.
+- **`preview.yml`** — on every pull request: builds and deploys a temporary **preview**
+  channel; the preview URL is posted as a comment on the PR.
+
+### One-time setup (required before the pipelines work)
+
+1. **Confirm the Firebase project ID.** Both workflows use `projectId: kozakadjusting`.
+   Firebase often appends a suffix (e.g. `kozakadjusting-1a2b3`). If yours differs, update
+   `projectId:` in both workflow files **and** the `default` in [`.firebaserc`](.firebaserc).
+
+2. **Add the service-account secret.** The workflows authenticate with a
+   `FIREBASE_SERVICE_ACCOUNT` GitHub secret. The easiest way to generate it is:
+   ```bash
+   firebase login
+   firebase init hosting:github
+   ```
+   Point it at this repo (`gregreda37/kozakadjusting`). It creates a service account,
+   stores its JSON as a repo secret, and writes a workflow. **Rename** the secret it
+   creates to `FIREBASE_SERVICE_ACCOUNT` (or update the workflow files to match the name
+   it generated), and delete the extra workflow it adds if you want to keep only these two.
+
+   To add the secret manually instead: create a service account key in the Firebase
+   console (Project settings → Service accounts → Generate new private key), then:
+   ```bash
+   gh secret set FIREBASE_SERVICE_ACCOUNT < path/to/serviceAccountKey.json
+   ```
+
+Once the secret exists, every push to `main` auto-builds and deploys, and each run is
+visible under the repo's **Actions** tab.
+
 ### Custom domain (www.kozakadjusting.com)
 
 In the Firebase console → **Hosting** → **Add custom domain**, enter
