@@ -62,15 +62,20 @@ fi
 echo "==> Waiting for the service account to propagate…"
 retry gcloud iam service-accounts describe "${SA_EMAIL}" >/dev/null 2>&1
 
-echo "==> Granting Hosting deploy roles to the service account…"
-retry gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member="serviceAccount:${SA_EMAIL}" \
-  --role="roles/firebasehosting.admin" \
-  --condition=None >/dev/null
-retry gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-  --member="serviceAccount:${SA_EMAIL}" \
-  --role="roles/serviceusage.serviceUsageConsumer" \
-  --condition=None >/dev/null
+echo "==> Granting deploy roles to the service account…"
+# roles/firebase.admin is required so firebase-tools can authenticate against the
+# project during `requireAuth`; without a firebase.* project role the CLI fails with
+# a misleading "Failed to authenticate, have you run firebase login?" error. This
+# matches the deploy service accounts on the sister sites (yana, ukrainianrestoration).
+for ROLE in \
+  roles/firebase.admin \
+  roles/firebasehosting.admin \
+  roles/serviceusage.serviceUsageConsumer; do
+  retry gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SA_EMAIL}" \
+    --role="${ROLE}" \
+    --condition=None >/dev/null
+done
 
 echo "==> Ensuring Workload Identity Pool exists…"
 if ! gcloud iam workload-identity-pools describe "${POOL_ID}" \
