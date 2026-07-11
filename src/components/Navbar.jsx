@@ -42,8 +42,14 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href="tel:+19732194973" className="btn btn-primary navbar__cta" onClick={close}>
-              (973) 219-4973
+            <a
+              href="https://ukrainianrestoration.com/myclaim/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary navbar__cta"
+              onClick={close}
+            >
+              View My Claim
             </a>
           </li>
         </ul>
