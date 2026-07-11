@@ -1,7 +1,9 @@
 name: Preview Deployment
 
 # Runs on every pull request: builds the app and deploys a temporary preview
-# channel. The preview URL is posted automatically as a comment on the PR.
+# channel (expires in 7 days). The preview URL is printed in the job logs.
+# Auth uses a FIREBASE_TOKEN secret (from `firebase login:ci`) because this Google
+# org enforces iam.disableServiceAccountKeyCreation, which blocks SA-key auth.
 on:
   pull_request:
     branches: [main]
@@ -9,10 +11,6 @@ on:
 jobs:
   preview:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      contents: read
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -28,8 +26,6 @@ jobs:
         run: npm run build
 
       - name: Deploy preview channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: kozakadjusting-e76a3
+        run: npx firebase-tools hosting:channel:deploy pr-${{ github.event.pull_request.number }} --project kozakadjusting-e76a3 --expires 7d --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

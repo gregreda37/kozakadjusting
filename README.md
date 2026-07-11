@@ -58,22 +58,19 @@ repo's **Actions** tab:
 1. **Firebase project ID** is `kozakadjusting-e76a3` — already set in both workflow files
    (`projectId:`) and in [`.firebaserc`](.firebaserc).
 
-2. **Add the service-account secret.** The workflows authenticate with a
-   `FIREBASE_SERVICE_ACCOUNT` GitHub secret. The easiest way to generate it is:
+2. **Add the `FIREBASE_TOKEN` secret.** This Google org enforces
+   `iam.disableServiceAccountKeyCreation`, so service-account JSON keys can't be created.
+   The workflows instead authenticate with a CI token (a user OAuth token, not a SA key):
    ```bash
-   firebase login
-   firebase init hosting:github
+   firebase login:ci        # opens a browser, prints a token
    ```
-   Point it at this repo (`gregreda37/kozakadjusting`). It creates a service account,
-   stores its JSON as a repo secret, and writes a workflow. **Rename** the secret it
-   creates to `FIREBASE_SERVICE_ACCOUNT` (or update the workflow files to match the name
-   it generated), and delete the extra workflow it adds if you want to keep only these two.
-
-   To add the secret manually instead: create a service account key in the Firebase
-   console (Project settings → Service accounts → Generate new private key), then:
+   Copy the token it prints, then store it as a repo secret:
    ```bash
-   gh secret set FIREBASE_SERVICE_ACCOUNT < path/to/serviceAccountKey.json
+   gh secret set FIREBASE_TOKEN -R gregreda37/kozakadjusting
+   # paste the token when prompted
    ```
+   (Or add it in the GitHub UI: repo → Settings → Secrets and variables → Actions →
+   New repository secret, named `FIREBASE_TOKEN`.)
 
 Once the secret exists, every push to `main` auto-builds and deploys, and each run is
 visible under the repo's **Actions** tab.
