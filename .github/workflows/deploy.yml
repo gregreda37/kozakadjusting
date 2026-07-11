@@ -6,7 +6,7 @@ name: Build & Deploy to Firebase
 # the org's iam.disableServiceAccountKeyCreation policy is a non-issue.
 #
 # The workload_identity_provider value below is filled in by
-# scripts/setup-github-wif.sh (run once). Until then it reads __WIF_PROVIDER__.
+# scripts/setup-github-wif.sh (run once). Until then it reads projects/941140901613/locations/global/workloadIdentityPools/github-pool/providers/github-provider.
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -40,7 +40,7 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: '__WIF_PROVIDER__'
+          workload_identity_provider: 'projects/941140901613/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-deploy@kozakadjusting-e76a3.iam.gserviceaccount.com'
           create_credentials_file: true
 
