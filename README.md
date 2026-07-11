@@ -51,29 +51,37 @@ repo's **Actions** tab:
 - **`deploy.yml`** — on every push to `main`: `npm ci` → `npm run build` → deploy to the
   **live** Firebase Hosting channel.
 - **`preview.yml`** — on every pull request: builds and deploys a temporary **preview**
-  channel; the preview URL is posted as a comment on the PR.
+  channel; the preview URL is printed in the job logs.
+
+Auth is **keyless, via Workload Identity Federation (WIF)** — the same approach the
+`yana-portfolio` and `ukrainianrestoration` sites use. GitHub Actions exchanges its OIDC
+token to impersonate a deploy service account; **no service-account key or CI token is
+stored anywhere**. This is what makes it work despite the org's
+`iam.disableServiceAccountKeyCreation` policy (WIF creates no keys).
 
 ### One-time setup (required before the pipelines work)
 
-1. **Firebase project ID** is `kozakadjusting-e76a3` — already set in both workflow files
-   (`projectId:`) and in [`.firebaserc`](.firebaserc).
+The Firebase project ID `kozakadjusting-e76a3` is already wired into both workflows and
+[`.firebaserc`](.firebaserc). The only thing missing is the WIF infrastructure in the
+Google Cloud project. A script provisions it:
 
-2. **Add the `FIREBASE_TOKEN` secret.** This Google org enforces
-   `iam.disableServiceAccountKeyCreation`, so service-account JSON keys can't be created.
-   The workflows instead authenticate with a CI token (a user OAuth token, not a SA key):
-   ```bash
-   firebase login:ci        # opens a browser, prints a token
-   ```
-   Copy the token it prints, then store it as a repo secret:
-   ```bash
-   gh secret set FIREBASE_TOKEN -R gregreda37/kozakadjusting
-   # paste the token when prompted
-   ```
-   (Or add it in the GitHub UI: repo → Settings → Secrets and variables → Actions →
-   New repository secret, named `FIREBASE_TOKEN`.)
+```bash
+gcloud auth login                      # authenticate as a project owner/editor
+bash scripts/setup-github-wif.sh       # from the repo root
+```
 
-Once the secret exists, every push to `main` auto-builds and deploys, and each run is
-visible under the repo's **Actions** tab.
+The script (idempotent) creates the deploy service account, grants it the Hosting deploy
+roles, creates the Workload Identity Pool + GitHub OIDC provider (restricted to the
+`gregreda37/kozakadjusting` repo), and then fills the `__WIF_PROVIDER__` placeholder in
+both workflow files with the real provider resource string. Commit and push afterward:
+
+```bash
+git add .github/workflows && git commit -m "Wire WIF provider into deploy workflows" && git push
+```
+
+That push triggers the first real deploy. Every run is visible under the repo's
+**Actions** tab. See [`scripts/setup-github-wif.sh`](scripts/setup-github-wif.sh) for the
+exact commands if you'd rather run them by hand.
 
 ### Custom domain (www.kozakadjusting.com)
 

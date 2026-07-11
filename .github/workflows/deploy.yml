@@ -1,21 +1,33 @@
-name: Deploy to Firebase Hosting
+name: Build & Deploy to Firebase
 
-# Runs on every push to main: builds the Vite app and deploys to the live channel.
-# Auth uses a FIREBASE_TOKEN secret (from `firebase login:ci`) because this Google
-# org enforces iam.disableServiceAccountKeyCreation, which blocks SA-key auth.
+# Push to main -> build the Vite app -> deploy to the live Hosting channel.
+# Auth uses Workload Identity Federation (keyless) — same pattern as the
+# yana-portfolio and ukrainianrestoration sites. No service-account keys, so
+# the org's iam.disableServiceAccountKeyCreation policy is a non-issue.
+#
+# The workload_identity_provider value below is filled in by
+# scripts/setup-github-wif.sh (run once). Until then it reads __WIF_PROVIDER__.
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    permissions:
+      contents: read
+      id-token: write   # required for Workload Identity Federation
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
@@ -24,7 +36,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: '__WIF_PROVIDER__'
+          service_account: 'github-deploy@kozakadjusting-e76a3.iam.gserviceaccount.com'
+          create_credentials_file: true
+
       - name: Deploy to Firebase Hosting (live)
-        run: npx firebase-tools deploy --only hosting --project kozakadjusting-e76a3 --non-interactive
+        run: npx firebase-tools@latest deploy --only hosting --project kozakadjusting-e76a3 --non-interactive
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}

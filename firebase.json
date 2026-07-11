@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "kozakadjusting-e76a3",
     "public": "dist",
     "ignore": [
       "firebase.json",
