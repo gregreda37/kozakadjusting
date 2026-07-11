@@ -37,6 +37,20 @@ gcloud services enable \
   cloudresourcemanager.googleapis.com \
   firebasehosting.googleapis.com
 
+# Retry a command a few times to ride out IAM eventual-consistency lag.
+retry() {
+  local n=0 max=8
+  until "$@"; do
+    n=$((n + 1))
+    if [ "${n}" -ge "${max}" ]; then
+      echo "    command failed after ${max} attempts: $*" >&2
+      return 1
+    fi
+    echo "    …not ready yet, retrying (${n}/${max})…"
+    sleep 5
+  done
+}
+
 echo "==> Ensuring deploy service account exists…"
 if ! gcloud iam service-accounts describe "${SA_EMAIL}" >/dev/null 2>&1; then
   gcloud iam service-accounts create "${SA_NAME}" \
@@ -45,12 +59,15 @@ else
   echo "    (already exists)"
 fi
 
+echo "==> Waiting for the service account to propagate…"
+retry gcloud iam service-accounts describe "${SA_EMAIL}" >/dev/null 2>&1
+
 echo "==> Granting Hosting deploy roles to the service account…"
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+retry gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --member="serviceAccount:${SA_EMAIL}" \
   --role="roles/firebasehosting.admin" \
   --condition=None >/dev/null
-gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+retry gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --member="serviceAccount:${SA_EMAIL}" \
   --role="roles/serviceusage.serviceUsageConsumer" \
   --condition=None >/dev/null
@@ -80,7 +97,7 @@ else
 fi
 
 echo "==> Allowing the repo to impersonate the service account…"
-gcloud iam service-accounts add-iam-policy-binding "${SA_EMAIL}" \
+retry gcloud iam service-accounts add-iam-policy-binding "${SA_EMAIL}" \
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/${POOL_ID}/attribute.repository/${REPO}" \
   >/dev/null
